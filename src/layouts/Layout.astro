@@ -1,12 +1,25 @@
+---
+import Navigation from '../components/Navigation.astro'
+
+interface LayoutProps {
+    title: string
+}
+
+const {title = 'Astro practice'}: LayoutProps = Astro.props
+---
+
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>Astro practice</title>
+    <title>{title}</title>
 </head>
 <body>
-    <slot />
+    <Navigation/>
+    <div class="mt-[50px] max-w-[960px] m-auto">
+        <slot />
+    </div>
 </body>
 </html>
