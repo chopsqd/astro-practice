@@ -1,0 +1,29 @@
+---
+import {IProduct} from "../../types";
+import Layout from "../../layouts/Layout.astro";
+
+// Скрипт выполняется на сервере
+export async function getStaticPaths() {
+    const products: IProduct[] = await fetch('https://fakestoreapi.com/products')
+        .then(response => response.json())
+
+    return products.map(product => ({
+        params: { id: product.id.toString() },
+        props: { product }
+    }))
+}
+
+
+// Для клиентской части (данные для страницы ниже)
+interface ProductProps {
+    product: IProduct
+}
+
+const { id } = Astro.params
+const { product } = Astro.props as ProductProps
+---
+
+<Layout title={`${product.title}`}>
+    <h1 class="text-lg font-bold">{product.title}</h1>
+    <img src={product.image} class="w-1/2">
+</Layout>

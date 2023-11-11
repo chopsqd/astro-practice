@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro"
 import ProductCard from "../components/ProductCard"
+import Visible from "../components/Visible"
 import {IProduct} from "../types";
 
 const products: IProduct[] = await fetch('https://fakestoreapi.com/products')
@@ -10,5 +11,11 @@ const products: IProduct[] = await fetch('https://fakestoreapi.com/products')
 <Layout title="Products page">
     <h1 class="text-2xl font-bold">Products page</h1>
 
-    {products.map(prod => <ProductCard product={prod}/>)}
+    <!--
+        client:load - выполняется сразу после загрузки всех скриптов и стилей
+        client:visible - ждет, пока компонент станет видимым на экране
+    -->
+
+    {products.map(prod => <ProductCard client:load product={prod}/>)}
+    <Visible client:visible/>
 </Layout>
